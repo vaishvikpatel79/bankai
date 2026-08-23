@@ -9,44 +9,48 @@ variable "kube_context" {
   default     = null
 }
 
+variable "cluster_name" {
+  description = "Identifier of the target Kubernetes cluster, for display/output purposes only (NOT used for provider connection -- see kube_context)."
+  type        = string
+  default     = "devops-testing"
+}
+
 variable "project_name" {
-  description = "Project name used in resource naming."
+  description = "Project name used for resource naming."
   type        = string
   default     = "bankai"
 }
 
 variable "environment" {
-  description = "Deployment environment (used in names/labels)."
+  description = "Deployment environment used for resource naming."
   type        = string
   default     = "dev"
 }
 
-variable "cluster_name" {
-  description = "Identifier of the target Kubernetes cluster, for display/output purposes only (NOT used for provider connection)."
-  type        = string
-  default     = "devops-testing"
-}
-
-variable "namespace_name" {
-  description = "Kubernetes namespace name to create for this deployment."
-  type        = string
-  default     = "bankai-dev-ns"
-}
-
-variable "image_backend" {
+variable "backend_image" {
   description = "Container image URI for Backend"
   type        = string
-  default     = "bankai-backend:v1"
 }
 
-variable "image_frontend" {
+variable "frontend_image" {
   description = "Container image URI for Frontend"
   type        = string
-  default     = "bankai-frontend:v1"
+}
+
+variable "backend_replicas" {
+  description = "Replica count for Backend"
+  type        = number
+  default     = 1
+}
+
+variable "frontend_replicas" {
+  description = "Replica count for Frontend"
+  type        = number
+  default     = 1
 }
 
 variable "jwt_secret_key" {
-  description = "Sensitive value for JWT_SECRET_KEY. Supplied at `terraform apply` time via -var or an untracked .tfvars file -- never given a default, never committed."
+  description = "Sensitive value for JWT_SECRET_KEY. Supplied at `terraform apply` time via -var or an untracked .tfvars file -- never given a default."
   type        = string
   sensitive   = true
 }
